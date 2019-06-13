@@ -1,0 +1,31 @@
+﻿@model ProftaakASP_S2.Models.LinkToProfessionalViewModel
+
+@{
+    ViewData["Title"] = "LinkCareProfessional";
+}
+
+<h2>Link een professional</h2>
+
+<div class="login-div">
+    <form asp-action="LinkCareToProf" asp-controller="Admin">
+        <input type="hidden" value ="@Model.CareRecipient.UserId" name="careId"/>
+        <select class="form-control" name="profId">
+            <option  value="">Selecteer professional</option>
+
+            @for (int i = 0; i < Model.ProfessionalList.Count; i++)
+            {
+                <option value="@Model.ProfessionalList[i].UserId">
+                    @Model.ProfessionalList[i].FirstName @Model.ProfessionalList[i].LastName
+                </option>
+            }
+        </select>
+        <input style="margin-top: 50px" class="btn btn-primary btn-lg btn-block" type="submit"/>
+    </form>
+
+
+</div>
+
+<div>
+    <br>
+    <a asp-action="UserOverview">Naar gebruikersoverzicht</a>
+</div>

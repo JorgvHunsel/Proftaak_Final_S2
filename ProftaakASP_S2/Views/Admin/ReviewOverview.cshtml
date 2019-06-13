@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ProftaakASP_S2.Models.ReviewViewModel>
+
+@{
+    ViewData["Title"] = "ReviewOverview";
+}
+
+<h2>Reviews</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>
+                Reviewed (volunteer)
+            </th>
+            <th>
+                Reviewed by (care recipient)
+            </th>
+            <th>
+                Content
+            </th>
+            <th>
+                Rating
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VolunteerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CareRecipientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StarAmount)
+            </td>
+            <td>
+                <form asp-action="DeleteReview" asp-controller="Review">
+                    <input type="hidden" value="@item.ReviewId" name="reviewId"/>
+                    <input type="submit" value="Delete"/>
+                </form>
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

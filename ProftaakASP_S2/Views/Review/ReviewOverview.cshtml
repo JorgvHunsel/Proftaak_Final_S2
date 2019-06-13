@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ProftaakASP_S2.Models.ReviewViewModel>
+
+@{
+    ViewData["Title"] = "ReviewOverview";
+}
+
+<h2>ReviewOverview</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CareRecipientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Review)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StarAmount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CareRecipientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StarAmount)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

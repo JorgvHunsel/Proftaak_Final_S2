@@ -1,0 +1,45 @@
+﻿@model ProftaakASP_S2.Models.AppointmentViewModel
+
+@{
+    ViewData["Title"] = "CreateAppointment";
+}
+
+<h2>Afspraak aanmaken met @ViewBag.Firstname</h2>
+
+<hr />
+<div class="row login-div">
+    <div class="col-md-4">
+        <form class="care-label" style="width: 465px" asp-action="CreateAppointment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="display: none">
+                <label asp-for="QuestionId" class="control-label"></label>
+                <input asp-for="QuestionId" class="form-control" />
+                <span asp-validation-for="QuestionId" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display: none">
+                <label asp-for="CareRecipientId" class="control-label"></label>
+                <input asp-for="CareRecipientId" class="form-control" />
+                <span asp-validation-for="CareRecipientId" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display: none">
+                <label asp-for="VolunteerId" class="control-label"></label>
+                <input asp-for="VolunteerId" class="form-control" />
+                <span asp-validation-for="VolunteerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeStamp" class="control-label">Datum</label>
+                <input asp-for="TimeStamp" class="form-control" />
+                <span asp-validation-for="TimeStamp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label">Locatie</label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary btn-lg btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+

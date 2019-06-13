@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ProftaakASP_S2.Models.ChatViewModel>
+
+@{
+    ViewData["Title"] = "Overview";
+}
+
+<h2>Chat overzicht</h2>
+
+@foreach (ChatViewModel chat in Model)
+{
+    <div>
+        <div class="question-box">
+            <div class="question-content">
+                <h2>@chat.VolunteerName</h2>
+                <h2 class="care-date">@chat.TimeStamp</h2>
+            </div>
+            <div class=question-content>
+                <h2 style="font-size: 30px">@chat.QuestionName</h2>
+            </div>
+            <div style="float: right" class="question-content">
+                <input class="question-button" type="button" value="Open chat" onclick="location.href = '@Url.Action("OpenChat", "CareRecipient", new { id = chat.ChatLogId })'" />
+                <br />
+                @if (chat.Status)
+                {
+                    <input class="question-button" type="button" value="Stop" onclick="location.href = '@Url.Action("ChangeStatusChat", "CareRecipient", new { chatlogId = chat.ChatLogId })'" />
+                }
+                else
+                {
+                    <input class="question-button" type="button" value="Start" onclick="location.href = '@Url.Action("ChangeStatusChat", "CareRecipient", new { chatlogId = chat.ChatLogId })'" />
+                }
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ProftaakASP_S2.Models.QuestionViewModel>
+
+@{
+    ViewData["Title"] = "OverviewClosed";
+}
+
+<h2>Overzicht gesloten hulpvragen</h2>
+
+@foreach (QuestionViewModel question in Model)
+{
+    <div>
+        <div class="question-box">
+            <div class="question-content">
+                <h3>@question.CareRecipientName</h3>
+            </div>
+            <div class="question-content">
+                <h3>@question.Title</h3>
+            </div>
+            <div class="question-content">
+                <h2 class="care-date">@question.Date</h2>
+            </div>
+            <div class=question-content>
+                <h3>@question.Category</h3>
+            </div>
+            <div class="question-content">
+                @if (question.Urgency)
+                {
+                    <label class="urgence">[Urgent]</label>
+                }
+            </div>
+        </div>
+    </div>
+}

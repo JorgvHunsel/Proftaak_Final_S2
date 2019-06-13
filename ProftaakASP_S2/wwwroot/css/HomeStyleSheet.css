@@ -1,0 +1,21 @@
+﻿body {
+    background-image: url("/images/Background_Home.png");
+    background-color: white;
+    background-repeat: repeat-x;
+}
+
+h2{
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+p {
+    font-size: 20px;
+    text-align: center;
+}
+
+span {
+    color: #e32527;
+}

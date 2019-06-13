@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ProftaakASP_S2.Models.AppointmentViewModel>
+
+@{
+    ViewData["Title"] = "Overview";
+}
+
+<h2>Jouw afpsraken</h2>
+
+@foreach (AppointmentViewModel appointment in Model)
+{
+    <div>
+        <div class="question-box">
+            <div class="question-content">
+                <h3>@appointment.CareRecipientName</h3>
+            </div>
+            <div class="question-content">
+                <h3>@appointment.QuestionTitle</h3>
+            </div>
+            <div class="question-content">
+                <h2 class="care-date">@appointment.TimeStamp</h2>
+            </div>
+            <div class=question-content>
+                <h3>Locatie: @appointment.Location</h3>
+            </div>
+            <div style="float: right" class="question-content">
+                <input class="question-button" type="button" value="Verwijder" onclick="location.href = '@Url.Action("DeleteAppointment", "Volunteer", new { appointmentId = appointment.AppointmentId })'" />
+            </div>
+        </div>
+    </div>
+}

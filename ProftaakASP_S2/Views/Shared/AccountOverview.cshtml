@@ -1,0 +1,45 @@
+﻿@model ProftaakASP_S2.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "AccountOverview";
+}
+
+<h2>Account overzicht</h2>
+
+<ul class="list-group">
+    <li class="list-group-item">
+        <h5>Voornaam:</h5>
+        <h4>@Model.FirstName</h4>
+    </li>
+    <li class="list-group-item">
+        <h5>Achternaam:</h5>
+        <h4>@Model.LastName</h4>
+    </li>
+    <li class="list-group-item">
+        <h5>Adres:</h5>
+        <h4>@Model.Address</h4>
+    </li>
+    <li class="list-group-item">
+        <h5>Woonplaats:</h5>
+        <h4>@Model.City</h4>
+    </li>
+    <li class="list-group-item">
+        <h5>Postcode:</h5>
+        <h4>@Model.PostalCode</h4>
+    </li>
+    <li class="list-group-item">
+        <h5>Emailadres:</h5>
+        <h4>@Model.EmailAddress</h4>
+    </li>
+    <li class="list-group-item">
+        <h5>Geboortedatum:</h5>
+        <h4>@Model.BirthDate</h4>
+    </li>
+    <li class="list-group-item">
+        <h5>Geslacht:</h5>
+        <h4>@Model.UserGender</h4>
+    </li>
+
+</ul>
+
+<button style="background-color: red" type="button" onclick="location.href = '@Url.Action("BlockUser", "User", new {  userId = Model.UserId })'" class="btn btn-danger">Account deactiveren</button>

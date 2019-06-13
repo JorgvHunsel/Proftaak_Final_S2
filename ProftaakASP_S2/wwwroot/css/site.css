@@ -1,0 +1,120 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.star-width {
+    width: 46%;
+}
+
+@media screen and (min-width: 550px) {
+    .star-width {
+        width: 53px;
+    }
+}
+
+.fa-flip-horizontal  {
+    transform: rotateY(180deg);
+}
+
+#starRating {
+    display: block;
+}
+
+@media screen and (max-width: 565px) {
+    #starRating {
+        display: flex;
+    }
+}
+
+.reviewTextArea {
+    resize: none;
+    height: 200px !important;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.glue-stars {
+    margin-right: -6px;
+}
+
+.stars-on-line {
+    display: inline;
+}
+
+.a-to-button-text {
+    color: white;
+}
+
+    .a-to-button-text:hover {
+        color: white;
+        text-decoration: none;
+    }
+
+.top-padding-review {
+    padding-top: 20px;
+}
+
+.chatmessageReceiving {
+    float: left;
+    position: relative;
+    background: #337ab7;
+    border-radius: .4em;
+    color: white;
+    margin: 10px;
+    width: 50%;
+}
+
+.chatmessageSending {
+    float: right;
+    position: relative;
+    background: #106f62;
+    border-radius: .4em;
+    color: white;
+    width: 50%;
+    margin: 10px;
+}
+
+.chatmessagetext {
+        margin: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+.chat-timestamp {
+    float: right;
+    color: lightgrey;
+}

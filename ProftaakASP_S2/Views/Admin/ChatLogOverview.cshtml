@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ProftaakASP_S2.Models.ChatViewModel>
+
+@{
+    ViewData["Title"] = "Administrator - ChatLog Overview";
+}
+
+<h2>Chat Overview</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Onderwerp
+            </th>
+            <th>
+                Naam Hulpbehoevende
+            </th>
+            <th>
+                Naam Vrijwilliger
+            </th>
+            <th>
+                Datum
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ChatViewModel item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CareRecipientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VolunteerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStamp)
+            </td>
+            <td>
+                @Html.ActionLink("Verwijder", "ChatLogDelete", new ChatViewModel(item.ChatLogId))
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

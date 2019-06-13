@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ReactionViewModel>
+
+@{
+    ViewData["Title"] = "ReactionOverview";
+}
+
+<h2>Overzicht reacties op hulpvraag: @Model.First().QuestionTitle</h2>
+
+@foreach (ReactionViewModel reaction in Model)
+{
+    <div>
+        <div class="question-box">
+            <div class="question-content">
+                <h2>@reaction.VolunteerName</h2>
+                <h2 class="care-date">@reaction.TimeStamp</h2>
+            </div>
+            <div class=question-content>
+                <h2 style="font-size: 30px">@reaction.Description</h2>
+            </div>
+            <div style="float: right" class="question-content">
+                <input style="margin-bottom: 10px" class="question-button" type="button" value="Start chat" onclick="location.href = '@Url.Action("CreateChat", "CareRecipient", new { reactionId = reaction.ReactionId, volunteerid = reaction.SenderId })'" />
+                <br />
+                <input style ="margin-top: 10px"class="question-button" type="button" value="Beoordeel" onclick="location.href = '@Url.Action("RatingOverview", "CareRecipient", new { volunteerid = reaction.SenderId, questionId = reaction.QuestionId })'" />
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@ViewBag.Message");
+        };
+    </script>
+}

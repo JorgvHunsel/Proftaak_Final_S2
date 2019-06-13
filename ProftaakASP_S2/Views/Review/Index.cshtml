@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "Review";
+}
+
+@model ReviewViewModel
+
+<div class="text-center">
+    <h2>Review</h2>
+    <div>
+        
+        <form asp-action="SubmitReview" asp-controller="Review">
+
+            @Html.HiddenFor(x => x.VolunteerId)
+            <input type="hidden" name="QuestionID" value="@Model.QuestionId" />
+            @Html.AntiForgeryToken()
+
+            @Html.TextAreaFor(x => x.Review, new { @placeholder = "Geef een review A.U.B.", @class = "reviewTextArea form-control" })
+            @Html.HiddenFor(x => x.StarAmount)
+            
+            @{ 
+            int rating = 1;
+            }
+            <div class='mb-10px'>
+                <div id="starRating">
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <div class="stars-on-line">
+                            @for (int star = 0; star < 2; star++)
+                            {
+                                if (star == 0)
+                                {
+                                    <svg onclick="(@rating)" class="svg-inline--fa fa-star-half star-width glue-stars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 530"><path id=@rating fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z"></path></svg>
+                                }
+                                else if (star == 1)
+                                {
+                                    <svg onclick="setStarRating(@rating)" class="svg-inline--fa fa-star-half fa-flip-horizontal star-width fa-halfstar" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 530"><path id=@rating fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z"></path></svg>
+                                }
+                                rating++;
+                            }
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <div class="text-center">
+                <input type="submit" value="Bevestigen" class="btn btn-primary" />
+            </div>
+        </form>
+    
+    </div>
+</div>

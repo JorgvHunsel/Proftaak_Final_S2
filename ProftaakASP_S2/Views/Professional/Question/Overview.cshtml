@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ProftaakASP_S2.Models.QuestionViewModel>
+
+@{
+    ViewData["Title"] = "Overview";
+}
+
+<h2>Overzicht hulpvragen</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Hulpbehoevende
+            </th>
+            <th>
+                Onderwerp
+            </th>
+            <th>
+                Inhoud
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Datum
+            </th>
+            <th>
+                Urgent
+            </th>
+            <th>
+                Categorie
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (QuestionViewModel item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CareRecipientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Urgency)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@ViewBag.Message");
+        };
+    </script>
+}
