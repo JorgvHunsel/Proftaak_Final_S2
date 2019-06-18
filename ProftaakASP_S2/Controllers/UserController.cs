@@ -5,6 +5,7 @@ using System.Security.Policy;
 using Logic;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using ProftaakASP_S2.Models;
@@ -195,6 +196,7 @@ namespace ProftaakASP_S2.Controllers
             return View("AccountOverview", new UserViewModel(currentUser));
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult EditAccount()
         {
@@ -205,7 +207,7 @@ namespace ProftaakASP_S2.Controllers
             return View("EditAccount", new UserViewModel(user));
         }
 
-
+        [Authorize]
         [HttpPost]
         public ActionResult EditAccount(UserViewModel userView)
         {
@@ -246,6 +248,8 @@ namespace ProftaakASP_S2.Controllers
 
             return RedirectToAction("AccountOverview");
         }
+
+        [Authorize(Policy = "Admin")]
         public ActionResult BlockUser(int userId)
         {
             User updatedUser = _userLogic.GetUserById(userId);

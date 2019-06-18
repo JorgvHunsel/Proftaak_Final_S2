@@ -186,6 +186,8 @@ namespace Data.Contexts
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
+                _conn.Close();
+
 
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -242,13 +244,10 @@ namespace Data.Contexts
 
                 return users;
             }
-            catch (Exception)
+            catch (SqlException e)
             {
-                return null;
-            }
-            finally
-            {
-                _conn.Close();
+                Console.WriteLine(e);
+                throw;
             }
         }
 
@@ -534,9 +533,10 @@ namespace Data.Contexts
                 return null;
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
+                Console.WriteLine(e);
+                throw;
             }
             finally
             {
