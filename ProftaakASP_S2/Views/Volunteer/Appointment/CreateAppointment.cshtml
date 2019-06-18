@@ -11,17 +11,17 @@
     <div class="col-md-4">
         <form class="care-label" style="width: 465px" asp-action="CreateAppointment">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group" style="display: none">
+            <div class="form-group"  hidden="none">
                 <label asp-for="QuestionId" class="control-label"></label>
                 <input asp-for="QuestionId" class="form-control" />
                 <span asp-validation-for="QuestionId" class="text-danger"></span>
             </div>
-            <div class="form-group" style="display: none">
+            <div class="form-group"  hidden="none">
                 <label asp-for="CareRecipientId" class="control-label"></label>
                 <input asp-for="CareRecipientId" class="form-control" />
                 <span asp-validation-for="CareRecipientId" class="text-danger"></span>
             </div>
-            <div class="form-group" style="display: none">
+            <div class="form-group"  hidden="none">
                 <label asp-for="VolunteerId" class="control-label"></label>
                 <input asp-for="VolunteerId" class="form-control" />
                 <span asp-validation-for="VolunteerId" class="text-danger"></span>
@@ -43,3 +43,11 @@
     </div>
 </div>
 
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@ViewBag.Message");
+        };
+    </script>
+}

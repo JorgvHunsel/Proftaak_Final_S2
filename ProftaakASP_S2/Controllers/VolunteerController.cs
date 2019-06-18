@@ -115,7 +115,15 @@ namespace ProftaakASP_S2.Controllers
 
         public ActionResult CreateAppointment(AppointmentViewModel appointmentView)
         {
-            _appointmentLogic.CreateAppointment(new Appointment(appointmentView.QuestionId, appointmentView.CareRecipientId, appointmentView.VolunteerId, DateTime.Now, appointmentView.TimeStamp, appointmentView.Location));
+            try
+            {
+                _appointmentLogic.CreateAppointment(new Appointment(appointmentView.QuestionId, appointmentView.CareRecipientId, appointmentView.VolunteerId, DateTime.Now, appointmentView.TimeStamp, appointmentView.Location));
+            }
+            catch (ArgumentException e)
+            {
+                ViewBag.Message = "Datum mag niet in het verleden";
+                return View("Appointment/CreateAppointment");
+            }
             return RedirectToAction("ChatOverview");
         }
 
