@@ -243,14 +243,12 @@ namespace ProftaakASP_S2.Controllers
         [HttpPost]
         public ActionResult EditAccount(UserViewModel userView)
         {
-            try
+            if (!_userLogic.CheckIfUserAlreadyExists(userView.EmailAddress))
             {
-                if (!_userLogic.CheckIfUserAlreadyExists(userView.EmailAddress))
+                if (_userLogic.IsEmailValid(userView.EmailAddress))
                 {
-                    if (_userLogic.IsEmailValid(userView.EmailAddress))
+                    try
                     {
-
-
                         switch (userView.UserAccountType)
                         {
                             case global::Models.User.AccountType.CareRecipient:
@@ -275,26 +273,27 @@ namespace ProftaakASP_S2.Controllers
                                 break;
                         }
                     }
-                    else
+                    catch (Exception)
                     {
-                        ViewBag.Message = "Foutieve email ingevoerd";
-                        return View();
+                        ViewBag.Message = "De gegevens zijn onjuist ingevoerd.";
+                        return RedirectToAction("EditAccount");
                     }
                 }
                 else
                 {
-                    ViewBag.Message = "Er bestaat al een account met dit e-mailadres";
+                    ViewBag.Message = "Foutieve email ingevoerd";
                     return View();
                 }
             }
-            catch (Exception)
+            else
             {
-                ViewBag.Message = "De gegevens zijn onjuist ingevoerd.";
-                return RedirectToAction("EditAccount");
+                ViewBag.Message = "Er bestaat al een account met dit e-mailadres";
+                return View();
             }
-
+           
             return RedirectToAction("AccountOverview");
         }
+
 
         [Authorize(Policy = "Admin")]
         public ActionResult BlockUser(int userId)
