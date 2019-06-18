@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using System;
+using Models;
 
 namespace ProftaakASP_S2.Models
 {
@@ -13,7 +14,7 @@ namespace ProftaakASP_S2.Models
         public string City { get; set; }
         public string PostalCode { get; set; }
         public string EmailAddress { get; set; }
-        public string BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public string UserGender { get; set; }
         public User.AccountType UserAccountType { get; set; }
         public bool Status { get; set; }
@@ -28,7 +29,7 @@ namespace ProftaakASP_S2.Models
             City = user.City;
             PostalCode = user.PostalCode;
             EmailAddress = user.EmailAddress;
-            BirthDate = user.BirthDate.ToShortDateString();
+            BirthDate = user.BirthDate.Date;
             UserGender = user.UserGender.ToString();
             UserAccountType = user.UserAccountType;
             Status = user.Status;
