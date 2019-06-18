@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Logic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,7 @@ namespace ProftaakASP_S2.Controllers
             _reviewLogic = reviewLogic;
         }
 
+        [Authorize(Policy = "CareRecipient")]
         [HttpPost]
         public ActionResult SubmitReview(ReviewViewModel reviewViewModel)
         {
@@ -41,6 +43,7 @@ namespace ProftaakASP_S2.Controllers
             return RedirectToAction("ReactionOverview", "CareRecipient", new { id = reviewViewModel.QuestionId });
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public ActionResult DeleteReview(int reviewId)
         {

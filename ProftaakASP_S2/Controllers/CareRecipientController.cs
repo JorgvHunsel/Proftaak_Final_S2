@@ -59,6 +59,37 @@ namespace ProftaakASP_S2.Controllers
         }
 
         [HttpGet]
+        public ActionResult OverviewAppointment()
+        {
+            List<AppointmentViewModel> appointments = new List<AppointmentViewModel>();
+
+            int userId = 0;
+            try
+            {
+                userId = Convert.ToInt32(Request.Cookies["id"]);
+            }
+            catch (Exception)
+            {
+                ViewBag.Message = "U moet zich eerst inloggen";
+                return View("Login");
+            }
+
+
+            foreach (Appointment appointment in _appointmentLogic.GetAllAppointmentsFromUser(userId))
+            {
+                appointments.Add(new AppointmentViewModel(appointment, _questionLogic.GetSingleQuestion(appointment.QuestionId), _userLogic.GetUserById(userId)));
+            }
+
+            return View("Appointment/Overview", appointments);
+        }
+
+        public ActionResult DeleteAppointment(int appointmentId)
+        {
+            _appointmentLogic.DeleteAppointment(appointmentId);
+            return View("Appointment/Overview");
+        }
+
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             ViewData["Categories"] = _categoryLogic.GetAllCategories();

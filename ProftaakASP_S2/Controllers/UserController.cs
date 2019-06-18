@@ -5,6 +5,7 @@ using System.Security.Policy;
 using Logic;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using ProftaakASP_S2.Models;
@@ -156,12 +157,10 @@ namespace ProftaakASP_S2.Controllers
                     ViewBag.Message = "De wachtwoorden komen niet overheen";
                     return View();
                 }
-
-
             }
-            catch (FormatException)
+            catch (Exception)
             {
-                ViewBag.Message = "De geboortedatum is onjuist ingevoerd";
+                ViewBag.Message = "De gebruiker is niet aangemaakt";
                 return View();
             }
 
@@ -229,6 +228,7 @@ namespace ProftaakASP_S2.Controllers
             return View("AccountOverview", new UserViewModel(currentUser));
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult EditAccount()
         {
@@ -239,52 +239,64 @@ namespace ProftaakASP_S2.Controllers
             return View("EditAccount", new UserViewModel(user));
         }
 
-
+        [Authorize]
         [HttpPost]
         public ActionResult EditAccount(UserViewModel userView)
         {
-            if (!_userLogic.CheckIfUserAlreadyExists(userView.EmailAddress))
+            try
             {
-                if (_userLogic.IsEmailValid(userView.EmailAddress))
+                if (!_userLogic.CheckIfUserAlreadyExists(userView.EmailAddress))
                 {
-                    switch (userView.UserAccountType)
+                    if (_userLogic.IsEmailValid(userView.EmailAddress))
                     {
-                        case global::Models.User.AccountType.CareRecipient:
-                            _userLogic.EditUser(new CareRecipient(userView.UserId, userView.FirstName, userView.LastName,
-                                userView.Address, userView.City, userView.PostalCode,
-                                userView.EmailAddress, Convert.ToDateTime(userView.BirthDate),
-                                (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
-                                global::Models.User.AccountType.CareRecipient, ""), "");
-                            break;
-                        case global::Models.User.AccountType.Admin:
-                            _userLogic.EditUser(new Admin(userView.UserId, userView.FirstName, userView.LastName,
-                                userView.Address, userView.City, userView.PostalCode,
-                                userView.EmailAddress, Convert.ToDateTime(userView.BirthDate),
-                                (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
-                                global::Models.User.AccountType.Admin, ""), "");
-                            break;
-                        default:
-                            _userLogic.EditUser(new Volunteer(userView.UserId, userView.FirstName, userView.LastName, userView.Address,
-                                userView.City, userView.PostalCode, userView.EmailAddress,
-                                Convert.ToDateTime(userView.BirthDate), (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
-                                global::Models.User.AccountType.Volunteer, ""), "");
-                            break;
+
+
+                        switch (userView.UserAccountType)
+                        {
+                            case global::Models.User.AccountType.CareRecipient:
+                                _userLogic.EditUser(new CareRecipient(userView.UserId, userView.FirstName, userView.LastName,
+                                    userView.Address, userView.City, userView.PostalCode,
+                                    userView.EmailAddress, Convert.ToDateTime(userView.BirthDate),
+                                    (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
+                                    global::Models.User.AccountType.CareRecipient, ""), "");
+                                break;
+                            case global::Models.User.AccountType.Admin:
+                                _userLogic.EditUser(new Admin(userView.UserId, userView.FirstName, userView.LastName,
+                                    userView.Address, userView.City, userView.PostalCode,
+                                    userView.EmailAddress, Convert.ToDateTime(userView.BirthDate),
+                                    (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
+                                    global::Models.User.AccountType.Admin, ""), "");
+                                break;
+                            default:
+                                _userLogic.EditUser(new Volunteer(userView.UserId, userView.FirstName, userView.LastName, userView.Address,
+                                    userView.City, userView.PostalCode, userView.EmailAddress,
+                                    Convert.ToDateTime(userView.BirthDate), (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
+                                    global::Models.User.AccountType.Volunteer, ""), "");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Foutieve email ingevoerd";
+                        return View();
                     }
                 }
                 else
                 {
-                    ViewBag.Message = "Foutieve email ingevoerd";
+                    ViewBag.Message = "Er bestaat al een account met dit e-mailadres";
                     return View();
                 }
             }
-            else
+            catch (Exception)
             {
-                ViewBag.Message = "Er bestaat al een account met dit e-mailadres";
-                return View();
+                ViewBag.Message = "De gegevens zijn onjuist ingevoerd.";
+                return RedirectToAction("EditAccount");
             }
+
             return RedirectToAction("AccountOverview");
         }
 
+        [Authorize(Policy = "Admin")]
         public ActionResult BlockUser(int userId)
         {
             User updatedUser = _userLogic.GetUserById(userId);
