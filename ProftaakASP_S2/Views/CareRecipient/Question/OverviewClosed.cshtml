@@ -26,7 +26,7 @@
             <div style="float: right" class="question-content">
                 <input class="question-button" type="button" value="Reacties" onclick="location.href = '@Url.Action("ReactionOverviewClosed", "CareRecipient", new { id = question.QuestionId })'" />
                 <br />
-                <input class="question-button" type="button" value="Maak open" onclick="location.href = '@Url.Action("ChangeStatus", "CareRecipient", new { id = question.QuestionId, status = question.Status, path = Context.Request.Path })'" />
+                <input class="question-button" type="button" value="Heropen vraag" onclick="location.href = '@Url.Action("ChangeStatus", "CareRecipient", new { id = question.QuestionId, status = question.Status, path = Context.Request.Path })'" />
                 <br />
                 <input class="question-button" type="button" value="Bewerken" onclick="location.href = '@Url.Action("Edit", "CareRecipient", new { id = question.QuestionId })'" />
             </div>

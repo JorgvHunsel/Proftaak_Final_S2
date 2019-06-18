@@ -395,15 +395,11 @@ namespace Data.Contexts
                 _conn.Open();
 
                 SqlCommand cmd = new SqlCommand(query, _conn);
-                cmd.Parameters.Add(new SqlParameter
-                {
-                    ParameterName = "@email",
-                    Value = email
-                });
+                cmd.Parameters.AddWithValue("@email", email);
 
                 int numberofAccounts = (int)cmd.ExecuteScalar();
 
-                if (numberofAccounts == 1)
+                if (numberofAccounts != 0)
                 {
                     return false;
                 }

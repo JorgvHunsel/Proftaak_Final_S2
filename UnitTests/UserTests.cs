@@ -111,7 +111,6 @@ namespace UnitTests
                 "173xdEamUX9D9nCeQrJ6e9HkBLQE3DwZtU14RW6PegHKonJ4gwS"));
         }
 
-
         [TestMethod]
         public void CheckIfUserAlreadyExists_IsValid()
         {

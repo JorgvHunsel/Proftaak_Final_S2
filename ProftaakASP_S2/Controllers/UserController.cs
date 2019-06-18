@@ -110,29 +110,45 @@ namespace ProftaakASP_S2.Controllers
             {
                 if (password == passwordValidation)
                 {
-                    switch (userViewModel.UserAccountType)
+                    if (_userLogic.CheckIfUserAlreadyExists(userViewModel.EmailAddress))
                     {
-                        case global::Models.User.AccountType.CareRecipient:
-                            _userLogic.AddNewUser(new CareRecipient(userViewModel.FirstName, userViewModel.LastName,
-                                userViewModel.Address, userViewModel.City, userViewModel.PostalCode,
-                                userViewModel.EmailAddress, Convert.ToDateTime(userViewModel.BirthDate),
-                                (User.Gender) Enum.Parse(typeof(User.Gender), userViewModel.UserGender), true,
-                                global::Models.User.AccountType.CareRecipient, password));
-                            break;
-                        case global::Models.User.AccountType.Admin:
-                            _userLogic.AddNewUser(new Admin(userViewModel.FirstName, userViewModel.LastName,
-                                userViewModel.Address, userViewModel.City, userViewModel.PostalCode,
-                                userViewModel.EmailAddress, Convert.ToDateTime(userViewModel.BirthDate),
-                                (User.Gender)Enum.Parse(typeof(User.Gender), userViewModel.UserGender), true,
-                                global::Models.User.AccountType.Admin, password));
-                            break;
-                        default:
-                            _userLogic.AddNewUser(
-                                new Volunteer(userViewModel.FirstName, userViewModel.LastName, userViewModel.Address,
-                                    userViewModel.City, userViewModel.PostalCode, userViewModel.EmailAddress,
-                                    Convert.ToDateTime(userViewModel.BirthDate), (User.Gender)Enum.Parse(typeof(User.Gender), userViewModel.UserGender), true,
-                                    global::Models.User.AccountType.Volunteer, password));
-                            break;
+                        if (_userLogic.IsEmailValid(userViewModel.EmailAddress))
+                        {
+                            switch (userViewModel.UserAccountType)
+                            {
+                                case global::Models.User.AccountType.CareRecipient:
+                                    _userLogic.AddNewUser(new CareRecipient(userViewModel.FirstName, userViewModel.LastName,
+                                        userViewModel.Address, userViewModel.City, userViewModel.PostalCode,
+                                        userViewModel.EmailAddress, Convert.ToDateTime(userViewModel.BirthDate),
+                                        (User.Gender)Enum.Parse(typeof(User.Gender), userViewModel.UserGender), true,
+                                        global::Models.User.AccountType.CareRecipient, password));
+                                    break;
+                                case global::Models.User.AccountType.Admin:
+                                    _userLogic.AddNewUser(new Admin(userViewModel.FirstName, userViewModel.LastName,
+                                        userViewModel.Address, userViewModel.City, userViewModel.PostalCode,
+                                        userViewModel.EmailAddress, Convert.ToDateTime(userViewModel.BirthDate),
+                                        (User.Gender)Enum.Parse(typeof(User.Gender), userViewModel.UserGender), true,
+                                        global::Models.User.AccountType.Admin, password));
+                                    break;
+                                default:
+                                    _userLogic.AddNewUser(
+                                        new Volunteer(userViewModel.FirstName, userViewModel.LastName, userViewModel.Address,
+                                            userViewModel.City, userViewModel.PostalCode, userViewModel.EmailAddress,
+                                            Convert.ToDateTime(userViewModel.BirthDate), (User.Gender)Enum.Parse(typeof(User.Gender), userViewModel.UserGender), true,
+                                            global::Models.User.AccountType.Volunteer, password));
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Foutieve email ingevoerd";
+                            return View();
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Er bestaat al een account met deze e-mail";
+                        return View();
                     }
                 }
                 else
@@ -166,11 +182,27 @@ namespace ProftaakASP_S2.Controllers
             {
                 if (password == passwordValidation)
                 {
-                    _userLogic.AddNewUser(new CareRecipient(userViewModel.FirstName, userViewModel.LastName,
-                        userViewModel.Address, userViewModel.City, userViewModel.PostalCode,
-                        userViewModel.EmailAddress, Convert.ToDateTime(userViewModel.BirthDate),
-                        (User.Gender)Enum.Parse(typeof(User.Gender), userViewModel.UserGender), true,
-                        global::Models.User.AccountType.Professional, password));
+                    if (_userLogic.CheckIfUserAlreadyExists(userViewModel.EmailAddress))
+                    {
+                        if (_userLogic.IsEmailValid(userViewModel.EmailAddress))
+                        {
+                            _userLogic.AddNewUser(new CareRecipient(userViewModel.FirstName, userViewModel.LastName,
+                            userViewModel.Address, userViewModel.City, userViewModel.PostalCode,
+                            userViewModel.EmailAddress, Convert.ToDateTime(userViewModel.BirthDate),
+                            (User.Gender)Enum.Parse(typeof(User.Gender), userViewModel.UserGender), true,
+                            global::Models.User.AccountType.Professional, password));
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Foutieve e-mail ingevoerd";
+                            return View();
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Er bestaat al een account met dit e-mailadres";
+                        return View();
+                    }
                 }
                 else
                 {
@@ -211,33 +243,48 @@ namespace ProftaakASP_S2.Controllers
         [HttpPost]
         public ActionResult EditAccount(UserViewModel userView)
         {
-            switch (userView.UserAccountType)
+            if (!_userLogic.CheckIfUserAlreadyExists(userView.EmailAddress))
             {
-                case global::Models.User.AccountType.CareRecipient:
-                    _userLogic.EditUser(new CareRecipient(userView.UserId ,userView.FirstName, userView.LastName,
-                        userView.Address, userView.City, userView.PostalCode,
-                        userView.EmailAddress, Convert.ToDateTime(userView.BirthDate),
-                        (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
-                        global::Models.User.AccountType.CareRecipient, ""), "");
-                    break;
-                case global::Models.User.AccountType.Admin:
-                    _userLogic.EditUser(new Admin(userView.UserId, userView.FirstName, userView.LastName,
-                        userView.Address, userView.City, userView.PostalCode,
-                        userView.EmailAddress, Convert.ToDateTime(userView.BirthDate),
-                        (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
-                        global::Models.User.AccountType.Admin, ""), "");
-                    break;
-                default:
-                    _userLogic.EditUser(new Volunteer(userView.UserId, userView.FirstName, userView.LastName, userView.Address,
-                        userView.City, userView.PostalCode, userView.EmailAddress,
-                        Convert.ToDateTime(userView.BirthDate), (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
-                        global::Models.User.AccountType.Volunteer, "") ,"");
-                    break;
+                if (_userLogic.IsEmailValid(userView.EmailAddress))
+                {
+                    switch (userView.UserAccountType)
+                    {
+                        case global::Models.User.AccountType.CareRecipient:
+                            _userLogic.EditUser(new CareRecipient(userView.UserId, userView.FirstName, userView.LastName,
+                                userView.Address, userView.City, userView.PostalCode,
+                                userView.EmailAddress, Convert.ToDateTime(userView.BirthDate),
+                                (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
+                                global::Models.User.AccountType.CareRecipient, ""), "");
+                            break;
+                        case global::Models.User.AccountType.Admin:
+                            _userLogic.EditUser(new Admin(userView.UserId, userView.FirstName, userView.LastName,
+                                userView.Address, userView.City, userView.PostalCode,
+                                userView.EmailAddress, Convert.ToDateTime(userView.BirthDate),
+                                (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
+                                global::Models.User.AccountType.Admin, ""), "");
+                            break;
+                        default:
+                            _userLogic.EditUser(new Volunteer(userView.UserId, userView.FirstName, userView.LastName, userView.Address,
+                                userView.City, userView.PostalCode, userView.EmailAddress,
+                                Convert.ToDateTime(userView.BirthDate), (User.Gender)Enum.Parse(typeof(User.Gender), userView.UserGender), true,
+                                global::Models.User.AccountType.Volunteer, ""), "");
+                            break;
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = "Foutieve email ingevoerd";
+                    return View();
+                }
             }
-
-
+            else
+            {
+                ViewBag.Message = "Er bestaat al een account met dit e-mailadres";
+                return View();
+            }
             return RedirectToAction("AccountOverview");
         }
+
         public ActionResult BlockUser(int userId)
         {
             User updatedUser = _userLogic.GetUserById(userId);
